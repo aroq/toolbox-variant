@@ -25,4 +25,4 @@ export TOOL_PATH=${TOOL_PATH:-$(find_tool_path "${1}")}
 
 _prepare_variant_env_vars "$@"
 
-_exec_tool "${1}"
+_exec_tool "${@}"
