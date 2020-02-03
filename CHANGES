@@ -1,3 +1,6 @@
+Version 0.1.1:
+ - Fix args passed to exec
+
 Version 0.1.0
  - Initial commit
 
