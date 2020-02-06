@@ -7,6 +7,7 @@ set -euo pipefail
 
 # Default varable values
 TOOLBOX_LOG_LEVEL=${TOOLBOX_LOG_LEVEL:-INFO}
+export TOOLBOX_DOCKER_SKIP=${TOOLBOX_DOCKER_SKIP:-false}
 
 # Trace with "-x" mode
 if [ "${TOOLBOX_LOG_LEVEL}" == "TRACE" ]; then
@@ -23,6 +24,18 @@ if [[ ! -d "$SCRIPT_DIR" ]]; then SCRIPT_DIR="$PWD"; fi
 
 export TOOL_PATH=${TOOL_PATH:-$(find_tool_path "${1}")}
 
-_prepare_variant_env_vars "$@"
+# Decide about Docker mode
+if [ "${TOOLBOX_RUN}" == "false" ] && [ "${TOOLBOX_DOCKER_SKIP}" == "false" ]; then
+  if [ -f /.dockerenv ]; then
+    echo "Inside docker already, setting TOOLBOX_DOCKER_SKIP to true"
+    TOOLBOX_DOCKER_SKIP=true
+  fi
+fi
+
+if [ "${TOOLBOX_DOCKER_SKIP}" == "true" ]; then
+  _log DEBUG "Skip the processing of variant variables"
+else
+  _prepare_variant_env_vars "$@"
+fi
 
 _exec_tool "${@}"
