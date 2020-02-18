@@ -15,7 +15,9 @@ function _prepare_variant_env_vars {
   _log DEBUG "${YELLOW}'VARIANT_*' variable list - ${variant_env_file}:${RESTORE}"
   _log DEBUG "$(cat "${variant_env_file}")"
 
-  local variant_env_file="toolbox/.toolbox/.tmp/.variant.vars.env"
+  local variant_env_file_dir="toolbox/.toolbox/.tmp"
+  local variant_env_file="${variant_env_file_dir}/.variant.vars.env"
+  mkdir -p "${variant_env_file_dir}"
   docker run --rm -i -t -w "$(pwd)" \
     --entrypoint="${TOOLBOX_DOCKER_VARIANT_VARS_ENTRYPOINT}" \
     -v "$(pwd):$(pwd)" aroq/toolbox \
@@ -28,4 +30,5 @@ function _prepare_variant_env_vars {
     TOOLBOX_DOCKER_RUN_TOOL_ENV_FILE="${TOOLBOX_DOCKER_RUN_TOOL_ENV_FILE} --env-file ${variant_env_file}"
   fi
 }
+
 
