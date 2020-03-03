@@ -1,3 +1,6 @@
+Version 0.1.5:
+ - Refacto code
+
 Version 0.1.4:
  - Fix directory creation for var env tmp file
 
