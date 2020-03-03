@@ -3,7 +3,8 @@
 # Set strict bash mode
 set -euo pipefail
 
-function _prepare_variant_env_vars {
+function toolbox_variant_prepare_env_vars() {
+  _log TRACE "Start 'toolbox_variant_prepare_env_vars' function"
   local variant_env_file
   variant_env_file="$(mktemp)"
 
@@ -15,9 +16,10 @@ function _prepare_variant_env_vars {
   _log DEBUG "${YELLOW}'VARIANT_*' variable list - ${variant_env_file}:${RESTORE}"
   _log DEBUG "$(cat "${variant_env_file}")"
 
-  local variant_env_file_dir="toolbox/.toolbox/.tmp"
-  local variant_env_file="${variant_env_file_dir}/.variant.vars.env"
-  mkdir -p "${variant_env_file_dir}"
+  export TOOL_PATH=${TOOL_PATH:-$(toolbox_wrap_detect_tool_path "${1}")}
+
+  mkdir -p toolbox/.tmp/
+  local variant_env_file="toolbox/.tmp/.variant.vars.env"
   docker run --rm -i -t -w "$(pwd)" \
     --entrypoint="${TOOLBOX_DOCKER_VARIANT_VARS_ENTRYPOINT}" \
     -v "$(pwd):$(pwd)" aroq/toolbox \
@@ -29,6 +31,17 @@ function _prepare_variant_env_vars {
   if [[ -f "${variant_env_file}" ]]; then
     TOOLBOX_DOCKER_RUN_TOOL_ENV_FILE="${TOOLBOX_DOCKER_RUN_TOOL_ENV_FILE} --env-file ${variant_env_file}"
   fi
+  _log TRACE "END 'toolbox_variant_prepare_env_vars' function"
 }
 
+function toolbox_variant_exec_tool() {
+  _log TRACE "Start 'toolbox_variant_exec_tool' function"
+  TOOLBOX_DOCKER_SKIP=${TOOLBOX_DOCKER_SKIP-false}
+  if [ "${TOOLBOX_DOCKER_SKIP}" == "true" ]; then
+    _log DEBUG "Skip the processing of variant variables"
+  else
+    toolbox_variant_prepare_env_vars "$@"
+  fi
 
+  toolbox_wrap_exec_tool "${@}"
+}

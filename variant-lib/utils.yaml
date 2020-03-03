@@ -1,0 +1,49 @@
+#!/usr/bin/env variant
+# vi: ft=yaml
+
+description: Toolbox management tasks
+
+bindParamsFromEnv: true
+
+parameters:
+- name: TOOLBOX_DIR
+  default: "toolbox"
+- name: TOOLBOX_TMP_DIR
+  default: ".tmp"
+- name: TOOLBOX_SETTINGS_FILE_NAME
+  default: toolbox.settings.yaml
+- name: TOOLBOX_BIN_DIR
+  default: toolbox/bin
+- name: TOOLBOX_TEMPLATE_RUN
+  default: /toolbox/templates/bin/run.tpl
+- name: TOOLBOX_SETTINGS_SOURCE_FILE
+  default: toolbox.settings.yaml
+
+tasks:
+  exec:
+    interactive: true
+    parameters:
+    - name: exec_dir
+      type: string
+      default: ""
+    - name: title
+      type: string
+      default: "Shell command"
+    - name: cmd
+      type: string
+      default: "pwd"
+    - name: flags
+      type: string
+      default: ""
+    steps:
+    - script: |
+        CMD={{ list .flags .cmd | join " " | trimSuffix "\n" | trim | quote | replace "\\n" "\n" | replace "$" "\\$" }}
+
+        if [ "${TOOLBOX_LOG_LEVEL}" = "INFO" ] || [ "${TOOLBOX_LOG_LEVEL}" = "DEBUG" ] || [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then
+          MESSAGE="---> {{ .title }}:"
+          echo -e "\033[0;34m${MESSAGE}\033[0m" 1>&2
+          echo -e "\033[0;32m${CMD}\033[0m" 1>&2
+        fi
+
+        set -e;
+        {{list .flags .cmd | join " "}}
