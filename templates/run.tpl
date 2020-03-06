@@ -45,14 +45,13 @@ fi
 {{ end -}}
 
 {{ if has .task "cmd" -}}
-CMD={{ .task.cmd}}
+export TOOLBOX_TOOL={{ .task.cmd}}
 {{ else }}
-CMD=
+export TOOLBOX_TOOL="tools/${TOOLBOX_TOOL_NAME}"
 {{ end -}}
 
 if [ $# -eq 0 ]; then
-  toolbox_variant_exec_tool "${CMD}"
+  toolbox_variant_exec "${TOOLBOX_TOOL}"
 else
-  toolbox_variant_exec_tool "${CMD}" "${@}"
+  toolbox_variant_exec "${TOOLBOX_TOOL}" "${@}"
 fi
-
