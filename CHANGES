@@ -1,3 +1,7 @@
+Version 0.1.12:
+ - Update docker image versions
+ - Update entrypoint TOOLBOX_TOOL_PATH check
+
 Version 0.1.11:
  - Set FROM aroq/toolbox-wrap:0.1.8
 
