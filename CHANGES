@@ -1,3 +1,6 @@
+Version 0.1.11:
+ - Set FROM aroq/toolbox-wrap:0.1.8
+
 Version 0.1.10:
  - Remove builder from Dockerfile
 
