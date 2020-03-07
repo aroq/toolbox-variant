@@ -1,3 +1,6 @@
+Version 0.1.13:
+ - Update docker image versions
+
 Version 0.1.12:
  - Update docker image versions
  - Update entrypoint TOOLBOX_TOOL_PATH check
