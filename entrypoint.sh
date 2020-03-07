@@ -10,7 +10,7 @@ TOOLBOX_TOOL_PATH=${TOOLBOX_TOOL_PATH:-}
 TOOLBOX_TOOL_DIRS=${TOOLBOX_TOOL_DIRS:-toolbox}
 TOOLBOX_WRAP_ENTRYPOINT_MODE=${TOOLBOX_WRAP_ENTRYPOINT_MODE:-run}
 
-_log TRACE "entrypoint.sh: Inside docker (aroq/toolbox-wrap)"
+_log TRACE "entrypoint.sh: Inside docker (aroq/toolbox-variant)"
 _log DEBUG "TOOLBOX_TOOL: ${TOOLBOX_TOOL}"
 _log DEBUG "TOOLBOX_TOOL_DIRS: ${TOOLBOX_TOOL_DIRS}"
 
