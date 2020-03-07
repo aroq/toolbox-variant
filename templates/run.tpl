@@ -24,8 +24,6 @@ export TOOLBOX_TOOL_NAME="{{ (ds "task_name" ).name }}"
 # Setup tool dirs
 {{ if has .task "tool_dirs" -}}
 export TOOLBOX_TOOL_DIRS="toolbox,{{ $l := reverse .task.tool_dirs }}{{ join $l "," }}"
-{{ else }}
-export TOOLBOX_TOOL_DIRS="toolbox"
 {{ end -}}
 
 {{ if has .task "config_context_prefix" -}}
