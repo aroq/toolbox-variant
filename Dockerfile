@@ -4,12 +4,6 @@ ARG YQ_VERSION=2.4.0
 FROM aroq/variant:$VARIANT_VERSION as variant
 FROM mikefarah/yq:$YQ_VERSION as yq
 
-FROM golang:1-alpine as builder
-
-# Install alpine package manifest
-COPY Dockerfile.packages.builder.txt /etc/apk/packages.txt
-RUN apk add --no-cache --update $(grep -v '^#' /etc/apk/packages.txt)
-
 FROM aroq/toolbox-wrap:0.1.6
 COPY --from=yq /usr/bin/yq /usr/bin/yq
 COPY --from=variant /usr/bin/variant /usr/bin/
