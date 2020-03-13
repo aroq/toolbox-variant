@@ -1,3 +1,6 @@
+Version 0.1.18:
+ - Update parent Docker image to aroq/toolbox-wrap:0.1.13
+
 Version 0.1.17:
  - Fix directories for templates & variant-lib
 
