@@ -13,8 +13,8 @@ COPY Dockerfile.packages.txt /etc/apk/packages.txt
 RUN apk add --no-cache --update $(grep -v '^#' /etc/apk/packages.txt)
 
 RUN mkdir -p /toolbox/toolbox-variant
-COPY variant-lib /toolbox/toolbox-variant/
-COPY templates /toolbox/toolbox-variant/
+COPY variant-lib /toolbox/toolbox-variant/variant-lib
+COPY templates /toolbox/toolbox-variant/templates
 
 COPY /entrypoint.sh /entrypoint.sh
 
