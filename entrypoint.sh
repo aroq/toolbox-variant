@@ -43,6 +43,7 @@ case "$TOOLBOX_WRAP_ENTRYPOINT_MODE" in
       yq r -j "${TOOLBOX_TOOL_PATH}" | jq -r '. | recurse(.tasks[]?) | select(.bindParamsFromEnv == true) | .parameters | .[]? | .name' | uniq
     fi;;
   run)
+    shift
     _log DEBUG "Execute tool: ${TOOLBOX_TOOL_PATH} $*"
     ${TOOLBOX_TOOL_PATH} "$@";;
 esac
