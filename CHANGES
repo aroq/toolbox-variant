@@ -1,3 +1,6 @@
+Version 0.1.19:
+ - Update image version & entypoint arg handling
+
 Version 0.1.18:
  - Update parent Docker image to aroq/toolbox-wrap:0.1.13
 
