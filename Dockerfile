@@ -18,4 +18,7 @@ COPY templates /toolbox/toolbox-variant/templates
 
 COPY /entrypoint.sh /entrypoint.sh
 
+ENV VARIANT_HIDE_EXTRA_CMDS true
+ENV VARIANT_LOG_LEVEL warning
+
 ENTRYPOINT ["/entrypoint.sh"]

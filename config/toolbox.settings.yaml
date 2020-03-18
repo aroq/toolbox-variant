@@ -2,7 +2,4 @@ config:
   toolbox-variant:
     params:
       template: toolbox/deps/toolbox-variant/templates/run.tpl
-      image: aroq/toolbox-variant:0.1.20
-      env:
-        VARIANT_HIDE_EXTRA_CMDS: true
-        VARIANT_LOG_LEVEL: warning
+      image: aroq/toolbox-variant:0.1.21
