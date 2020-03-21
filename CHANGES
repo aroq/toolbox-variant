@@ -1,3 +1,6 @@
+Version 0.1.23:
+ - Add debug messages
+
 Version 0.1.22:
  - Add before/after hooks support
 
