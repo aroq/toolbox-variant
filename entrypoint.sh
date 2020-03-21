@@ -41,9 +41,19 @@ case "$TOOLBOX_WRAP_ENTRYPOINT_MODE" in
     echo "TOOLBOX_TOOL_PATH=\"${TOOLBOX_TOOL_PATH}\""
     if [[ -f ${TOOLBOX_TOOL_PATH} ]] && grep -Fq variant "${TOOLBOX_TOOL_PATH}"; then
       yq r -j "${TOOLBOX_TOOL_PATH}" | jq -r '. | recurse(.tasks[]?) | select(.bindParamsFromEnv == true) | .parameters | .[]? | .name' | uniq
-    fi;;
+    fi
+    ;;
   run)
     shift
     _log DEBUG "Execute tool: ${TOOLBOX_TOOL_PATH} $*"
-    ${TOOLBOX_TOOL_PATH} "$@";;
+    if [[ -f "toolbox/hooks/before" ]]; then
+      toolbox/hooks/before "$@"
+    fi
+
+    ${TOOLBOX_TOOL_PATH} "$@"
+
+    if [[ -f "toolbox/hooks/after" ]]; then
+      toolbox/hooks/after "$@"
+    fi
+    ;;
 esac
