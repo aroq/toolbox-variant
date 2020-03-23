@@ -1,3 +1,6 @@
+Version 0.1.26:
+ - Update parent image to aroq/toolbox-wrap:0.1.21
+
 Version 0.1.25:
  - Add hook dirs
 
