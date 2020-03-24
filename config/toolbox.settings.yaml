@@ -2,4 +2,4 @@ config:
   toolbox-variant:
     params:
       template: toolbox/deps/toolbox-variant/templates/run.tpl
-      image: aroq/toolbox-variant:0.1.27
+      image: aroq/toolbox-variant:0.1.28
