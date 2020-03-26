@@ -15,4 +15,3 @@ function toolbox_variant_exec() {
   toolbox_wrap_exec "${@}"
   _log TRACE "End 'toolbox_variant_exec' function"
 }
-
