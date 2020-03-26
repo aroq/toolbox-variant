@@ -39,8 +39,6 @@ tasks:
     - script: |
         CMD={{ list .flags .cmd | join " " | trimSuffix "\n" | trim | quote | replace "\\n" "\n" | replace "$" "\\$" }}
 
-        echo "TOOLBOX_LOG_LEVEL: ${TOOLBOX_LOG_LEVEL}"
-
         if [ "${TOOLBOX_LOG_LEVEL}" = "INFO" ] || [ "${TOOLBOX_LOG_LEVEL}" = "DEBUG" ] || [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then
           MESSAGE="---> {{ .title }}:"
           echo -e "\033[0;34m${MESSAGE}\033[0m" 1>&2
