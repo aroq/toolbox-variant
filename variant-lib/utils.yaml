@@ -4,46 +4,43 @@
 description: Toolbox management tasks
 
 bindParamsFromEnv: true
-
-parameters:
-- name: TOOLBOX_DIR
-  default: "toolbox"
-- name: TOOLBOX_TMP_DIR
-  default: ".tmp"
-- name: TOOLBOX_SETTINGS_FILE_NAME
-  default: toolbox.settings.yaml
-- name: TOOLBOX_BIN_DIR
-  default: toolbox/bin
-- name: TOOLBOX_TEMPLATE_RUN
-  default: /toolbox/templates/bin/run.tpl
-- name: TOOLBOX_SETTINGS_SOURCE_FILE
-  default: toolbox.settings.yaml
+autoenv: true
 
 tasks:
   exec:
     interactive: true
+    bindParamsFromEnv: true
+    autoenv: true
     parameters:
-    - name: exec_dir
+    - name: hook_context
       type: string
-      default: ""
+      default: "toolbox_variant_core_exec"
+    - name: TOOLBOX_UTILS_DIR
+      type: string
+      default: "toolbox/deps/toolbox-utils"
     - name: title
-      type: string
-      default: "Shell command"
+      default: "Execute command"
     - name: cmd
-      type: string
       default: "pwd"
-    - name: flags
-      type: string
-      default: ""
     steps:
     - script: |
-        CMD={{ list .flags .cmd | join " " | trimSuffix "\n" | trim | quote | replace "\\n" "\n" | replace "$" "\\$" }}
+        # Includes
+        . "${TOOLBOX_UTILS_DIR}/includes/init.sh"
+        . "${TOOLBOX_UTILS_DIR}/includes/util.sh"
+        . "${TOOLBOX_UTILS_DIR}/includes/log.sh"
+        . "${TOOLBOX_UTILS_DIR}/includes/exec.sh"
 
-        if [ "${TOOLBOX_LOG_LEVEL}" = "INFO" ] || [ "${TOOLBOX_LOG_LEVEL}" = "DEBUG" ] || [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then
-          MESSAGE="---> {{ .title }}:"
-          echo -e "\033[0;34m${MESSAGE}\033[0m" 1>&2
-          echo -e "\033[0;32m${CMD}\033[0m" 1>&2
-        fi
+        CMD={{ list .cmd | join " " | trimSuffix "\n" | trim | quote | replace "\\n" "\n" | replace "$" "\\$" }}
 
-        set -e;
-        {{list .flags .cmd | join " "}}
+        env | grep TOOLBOX_
+
+        toolbox_exec_hook "{{ .hook_context }}" "before"
+
+        _toolbox_exec_log_cmd "{{ .title }}" "${CMD}"
+
+
+        {{ .cmd }}
+
+        toolbox_exec_hook "{{ .hook_context }}" "after"
+
+
