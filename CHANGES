@@ -1,3 +1,6 @@
+Version 0.1.36:
+ - Add util.sh include to entrypoint
+
 Version 0.1.35:
  - Update parent image to aroq/toolbox-wrap:0.1.29
 
