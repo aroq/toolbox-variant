@@ -1,3 +1,6 @@
+Version 0.1.37:
+ - Remove debug env var print
+
 Version 0.1.36:
  - Add util.sh include to entrypoint
 
