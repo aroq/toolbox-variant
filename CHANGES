@@ -1,3 +1,6 @@
+Version 0.1.39:
+ - Update parent image to aroq/toolbox-wrap:0.1.31
+
 Version 0.1.38:
  - Update parent image to aroq/toolbox-wrap:0.1.30
 
