@@ -4,7 +4,7 @@ ARG YQ_VERSION=2.4.0
 FROM aroq/variant:$VARIANT_VERSION as variant
 FROM mikefarah/yq:$YQ_VERSION as yq
 
-FROM aroq/toolbox-wrap:0.1.26
+FROM aroq/toolbox-wrap:0.1.28
 COPY --from=yq /usr/bin/yq /usr/bin/yq
 COPY --from=variant /usr/bin/variant /usr/bin/
 

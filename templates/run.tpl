@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
 
-# Includes
-. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/init.sh"
-. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/util.sh"
-. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/log.sh"
-. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/exec.sh"
-. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-docker/includes/docker.sh"
-. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-wrap/includes/wrap.sh"
-. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-variant/includes/variant.sh"
-
 # Setup variables
 {{- if has .task "env" -}}
 {{- range $k, $v := .task.env -}}
@@ -47,6 +38,15 @@ export TOOLBOX_TOOL={{ .task.cmd}}
 {{ else }}
 export TOOLBOX_TOOL="tools/${TOOLBOX_TOOL_NAME}"
 {{ end -}}
+
+# Includes
+. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/init.sh"
+. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/util.sh"
+. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/log.sh"
+. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/exec.sh"
+. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-docker/includes/docker.sh"
+. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-wrap/includes/wrap.sh"
+. "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-variant/includes/variant.sh"
 
 if [ $# -eq 0 ]; then
   toolbox_variant_exec "${TOOLBOX_TOOL}"
