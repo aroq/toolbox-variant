@@ -32,8 +32,6 @@ tasks:
 
         CMD={{ list .cmd | join " " | trimSuffix "\n" | trim | quote | replace "\\n" "\n" | replace "$" "\\$" }}
 
-        env | grep TOOLBOX_
-
         toolbox_exec_hook "{{ .hook_context }}" "before"
 
         _toolbox_exec_log_cmd "{{ .title }}" "${CMD}"
