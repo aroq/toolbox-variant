@@ -5,6 +5,7 @@ set -euo pipefail
 
 . /toolbox/toolbox-utils/includes/log.sh
 . /toolbox/toolbox-utils/includes/exec.sh
+. /toolbox/toolbox-utils/includes/util.sh
 
 TOOLBOX_TOOL=${TOOLBOX_TOOL:-${1}}
 TOOLBOX_TOOL_PATH=${TOOLBOX_TOOL_PATH:-}
