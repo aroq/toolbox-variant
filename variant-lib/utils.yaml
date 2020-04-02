@@ -30,6 +30,8 @@ tasks:
         . "${TOOLBOX_UTILS_DIR}/includes/log.sh"
         . "${TOOLBOX_UTILS_DIR}/includes/exec.sh"
 
+        if [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then set -x; fi
+
         CMD={{ list .cmd | join " " | trimSuffix "\n" | trim | quote | replace "\\n" "\n" | replace "$" "\\$" }}
 
         toolbox_exec_hook "{{ .hook_context }}" "before"
@@ -40,5 +42,7 @@ tasks:
         {{ .cmd }}
 
         toolbox_exec_hook "{{ .hook_context }}" "after"
+
+        if [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then set +x; fi
 
 
