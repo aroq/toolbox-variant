@@ -1,3 +1,6 @@
+Version 0.1.40:
+ - Add tracing
+
 Version 0.1.39:
  - Update parent image to aroq/toolbox-wrap:0.1.31
 
