@@ -4,13 +4,11 @@
 description: Toolbox management tasks
 
 bindParamsFromEnv: true
-autoenv: true
 
 tasks:
   exec:
     interactive: true
     bindParamsFromEnv: true
-    autoenv: true
     parameters:
     - name: hook_context
       type: string
@@ -25,12 +23,10 @@ tasks:
     steps:
     - script: |
         # Includes
-        . "${TOOLBOX_UTILS_DIR}/includes/init.sh"
-        . "${TOOLBOX_UTILS_DIR}/includes/util.sh"
-        . "${TOOLBOX_UTILS_DIR}/includes/log.sh"
-        . "${TOOLBOX_UTILS_DIR}/includes/exec.sh"
-
-        if [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then set -x; fi
+        . "{{ .TOOLBOX_UTILS_DIR }}/includes/init.sh"
+        . "{{ .TOOLBOX_UTILS_DIR }}/includes/util.sh"
+        . "{{ .TOOLBOX_UTILS_DIR }}/includes/log.sh"
+        . "{{ .TOOLBOX_UTILS_DIR }}/includes/exec.sh"
 
         CMD={{ list .cmd | join " " | trimSuffix "\n" | trim | quote | replace "\\n" "\n" | replace "$" "\\$" }}
 
@@ -38,11 +34,6 @@ tasks:
 
         _toolbox_exec_log_cmd "{{ .title }}" "${CMD}"
 
-
         {{ .cmd }}
 
         toolbox_exec_hook "{{ .hook_context }}" "after"
-
-        if [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then set +x; fi
-
-
