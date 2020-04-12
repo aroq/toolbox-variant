@@ -1,3 +1,6 @@
+Version 0.1.43:
+ - Change TOOLBOX_UTILS_DIR to TOOLBOX_DEPS_DIR for variant core.exec task
+
 Version 0.1.42:
  - Update to toolbox_exec package
 
