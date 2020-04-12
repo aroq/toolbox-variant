@@ -13,9 +13,9 @@ tasks:
     - name: hook_context
       type: string
       default: "toolbox_variant_core_exec"
-    - name: TOOLBOX_UTILS_DIR
+    - name: TOOLBOX_DEPS_DIR
       type: string
-      default: "toolbox/deps/toolbox-utils"
+      default: "toolbox/deps"
     - name: title
       default: "Execute command"
     - name: cmd
@@ -23,10 +23,10 @@ tasks:
     steps:
     - script: |
         # Includes
-        . "{{ .TOOLBOX_UTILS_DIR }}/includes/init.sh"
-        . "{{ .TOOLBOX_UTILS_DIR }}/includes/util.sh"
-        . "{{ .TOOLBOX_UTILS_DIR }}/includes/log.sh"
-        . "{{ .TOOLBOX_UTILS_DIR }}/includes/exec.sh"
+        . "{{ .TOOLBOX_DEPS_DIR }}/toolbox-utils/includes/init.sh"
+        . "{{ .TOOLBOX_DEPS_DIR }}/toolbox-utils/includes/util.sh"
+        . "{{ .TOOLBOX_DEPS_DIR }}/toolbox-utils/includes/log.sh"
+        . "{{ .TOOLBOX_DEPS_DIR }}/toolbox-exec/includes/exec.sh"
 
         CMD={{ list .cmd | join " " | trimSuffix "\n" | trim | quote | replace "\\n" "\n" | replace "$" "\\$" }}
 
