@@ -48,8 +48,6 @@ export TOOLBOX_TOOL="tools/${TOOLBOX_TOOL_NAME}"
 . "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-wrap/includes/wrap.sh"
 . "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-variant/includes/variant.sh"
 
-if [ $# -eq 0 ]; then
-  toolbox_variant_exec "${TOOLBOX_TOOL}"
-else
-  toolbox_variant_exec "${TOOLBOX_TOOL}" "${@}"
-fi
+TOOLBOX_EXEC_SUBSHELL=false
+toolbox_exec_handler "toolbox_variant_exec" "$@"
+TOOLBOX_EXEC_SUBSHELL=true
