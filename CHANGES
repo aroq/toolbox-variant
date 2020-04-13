@@ -1,3 +1,6 @@
+Version 0.1.44:
+ - Update exec handling
+
 Version 0.1.43:
  - Change TOOLBOX_UTILS_DIR to TOOLBOX_DEPS_DIR for variant core.exec task
 
