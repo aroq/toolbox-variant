@@ -4,7 +4,7 @@ ARG YQ_VERSION=2.4.0
 FROM aroq/variant:$VARIANT_VERSION as variant
 FROM mikefarah/yq:$YQ_VERSION as yq
 
-FROM aroq/toolbox-wrap:0.1.40
+FROM aroq/toolbox-wrap:0.1.41
 COPY --from=yq /usr/bin/yq /usr/bin/yq
 COPY --from=variant /usr/bin/variant /usr/bin/
 
@@ -16,7 +16,7 @@ RUN mkdir -p /toolbox/toolbox-variant
 COPY variant-lib /toolbox/toolbox-variant/variant-lib
 COPY templates /toolbox/toolbox-variant/templates
 
-COPY /entrypoint.sh /entrypoint.sh
+COPY /entrypoint.vars.sh /entrypoint.vars.sh
 
 ENV VARIANT_HIDE_EXTRA_CMDS true
 ENV VARIANT_LOG_LEVEL warning
