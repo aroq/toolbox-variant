@@ -6,9 +6,11 @@
 # Set strict bash mode
 set -euo pipefail
 
+set -x
 . "${TOOLBOX_DEPS_DIR}"/toolbox-utils/includes/log.sh
 . "${TOOLBOX_DEPS_DIR}"/toolbox-utils/includes/util.sh
 . "${TOOLBOX_DEPS_DIR}"/toolbox-exec/includes/exec.sh
+set +x
 
 TOOLBOX_TOOL=${TOOLBOX_TOOL:-${1}}
 TOOLBOX_TOOL_PATH=${TOOLBOX_TOOL_PATH:-}
