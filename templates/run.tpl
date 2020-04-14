@@ -49,5 +49,5 @@ export TOOLBOX_TOOL="tools/${TOOLBOX_TOOL_NAME}"
 . "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-variant/includes/variant.sh"
 
 TOOLBOX_EXEC_SUBSHELL=false
-toolbox_exec_handler "toolbox_variant_exec" "$@"
+toolbox_exec_handler "toolbox_variant_exec" "${TOOLBOX_TOOL}" "$@"
 TOOLBOX_EXEC_SUBSHELL=true

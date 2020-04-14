@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC1090
+# shellcheck disable=SC1091
+
 # Set strict bash mode
 set -euo pipefail
 
-. /toolbox/toolbox-utils/includes/log.sh
-. /toolbox/toolbox-exec/includes/exec.sh
-. /toolbox/toolbox-utils/includes/util.sh
+. "${TOOLBOX_DEPS_DIR}"/toolbox-utils/includes/log.sh
+. "${TOOLBOX_DEPS_DIR}"/toolbox-utils/includes/util.sh
+. "${TOOLBOX_DEPS_DIR}"/toolbox-exec/includes/exec.sh
 
 TOOLBOX_TOOL=${TOOLBOX_TOOL:-${1}}
 TOOLBOX_TOOL_PATH=${TOOLBOX_TOOL_PATH:-}
@@ -16,19 +19,8 @@ _log TRACE "entrypoint.sh: Inside docker (aroq/toolbox-variant)"
 _log DEBUG "TOOLBOX_TOOL: ${TOOLBOX_TOOL}"
 _log DEBUG "TOOLBOX_TOOL_DIRS: ${TOOLBOX_TOOL_DIRS}"
 
-if [ ! -f "${TOOLBOX_TOOL}" ]; then
-IFS=" "
-for i in $(echo "$TOOLBOX_TOOL_DIRS" | sed "s/,/ /g")
-do
-  _log DEBUG "Check if tool exists at path: ${i}/${TOOLBOX_TOOL}"
-  if [[ -f "${i}/${TOOLBOX_TOOL}" ]]; then
-    TOOLBOX_TOOL_PATH="${i}/${TOOLBOX_TOOL}"
-    break
-  fi
-done
-fi
-
-if [[ -z ${TOOLBOX_TOOL_PATH} ]] || [[ ! -f ${TOOLBOX_TOOL_PATH} ]]; then
+TOOLBOX_TOOL_PATH=$(toolbox_exec_find_tool "${TOOLBOX_TOOL}" "${TOOLBOX_TOOL_PATH}")
+if [[ -z ${TOOLBOX_TOOL_PATH} ]]; then
   _log ERROR "TOOLBOX_TOOL_PATH: ${TOOLBOX_TOOL_PATH} NOT FOUND!"
   exit 1
 fi
@@ -53,11 +45,11 @@ case "$TOOLBOX_WRAP_ENTRYPOINT_MODE" in
     _log DEBUG "Execute tool: ${TOOLBOX_TOOL_PATH} $*"
     ${TOOLBOX_TOOL_PATH} "$@"
 
-    _log DEBUG "Check if hooks exist: toolbox/hooks/after"
-    if [[ -f "toolbox/hooks/after" ]]; then
-      _log DEBUG "Execute hook: toolbox/hooks/after $*"
-      toolbox/hooks/after "$@"
-    fi
+    # _log DEBUG "Check if hooks exist: toolbox/hooks/after"
+    # if [[ -f "toolbox/hooks/after" ]]; then
+      # _log DEBUG "Execute hook: toolbox/hooks/after $*"
+      # toolbox/hooks/after "$@"
+    # fi
 
     toolbox_exec_hook "toolbox_docker_entrypoint_run" "after"
     ;;
