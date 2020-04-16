@@ -39,6 +39,16 @@ export TOOLBOX_TOOL={{ .task.cmd}}
 export TOOLBOX_TOOL="tools/${TOOLBOX_TOOL_NAME}"
 {{ end -}}
 
+# Setup files
+{{ if has .task "files" -}}
+{{ if has .task.files "exec_contexts" -}}
+{{- range $context, $files := .task.files.exec_contexts -}}
+export TOOLBOX_FILES_{{ $context }}="{{ $l :=  $files | uniq }}{{ join $l "," }}"
+{{ end -}}
+{{ end -}}
+{{ end -}}
+
+
 # Includes
 . "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/init.sh"
 . "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-utils/includes/util.sh"
@@ -48,6 +58,5 @@ export TOOLBOX_TOOL="tools/${TOOLBOX_TOOL_NAME}"
 . "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-wrap/includes/wrap.sh"
 . "{{ getenv "TOOLBOX_DEPS_DIR" "toolbox/deps" }}/toolbox-variant/includes/variant.sh"
 
-TOOLBOX_EXEC_SUBSHELL=false
-toolbox_exec_handler "toolbox_variant_exec" "${TOOLBOX_TOOL}" "$@"
-TOOLBOX_EXEC_SUBSHELL=true
+
+toolbox_exec_wrapper "toolbox_variant_exec" "${TOOLBOX_TOOL}" "$@"
