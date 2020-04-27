@@ -1,3 +1,6 @@
+Version 0.1.52:
+ - Remove shift in entrypoint run
+
 Version 0.1.51:
  - Update exec handling
 
