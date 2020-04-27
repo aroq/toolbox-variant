@@ -11,6 +11,7 @@ set -euo pipefail
 . "${TOOLBOX_DEPS_DIR}"/toolbox-exec/includes/exec.sh
 
 TOOLBOX_TOOL=${TOOLBOX_TOOL:-${1}}
+
 TOOLBOX_TOOL_PATH=${TOOLBOX_TOOL_PATH:-}
 TOOLBOX_TOOL_DIRS=${TOOLBOX_TOOL_DIRS:-toolbox}
 TOOLBOX_WRAP_ENTRYPOINT_MODE=${TOOLBOX_WRAP_ENTRYPOINT_MODE:-run}
@@ -38,7 +39,7 @@ case "$TOOLBOX_WRAP_ENTRYPOINT_MODE" in
     fi
     ;;
   run)
-    shift
+    # shift
 
     toolbox_exec_hook "toolbox_docker_entrypoint_run" "before"
 
